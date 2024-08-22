@@ -3,7 +3,6 @@ import requests
 
 from .models import Files
 from django.conf import settings
-from django.http import HttpResponse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .utils import get_active_entity, get_active_repository, get_server_status
@@ -177,9 +176,8 @@ def connect_database(request):
             if not ip_address or not port or not database_name:
                 return JsonResponse({"error": "Missing required fields"}, status=400)
 
-            url = f"{BLAZEGRAPH_URL}/blazegraph/namespace/{database_name}/sparql"
+            url = f"{BLAZEGRAPH_URL}/namespace/{database_name}/sparql"
             response = requests.get(url)
-
             if response.status_code == 200:
                 return JsonResponse(
                     {"success": True, "message": "Connected successfully", "data": {}},

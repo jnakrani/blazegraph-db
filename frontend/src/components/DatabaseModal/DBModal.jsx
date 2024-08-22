@@ -3,7 +3,17 @@ import { toast } from "react-toastify";
 import { HTTP } from "../../utils";
 import "../../assets/css/modal.css";
 
-const DBModal = ({ handleClose }) => {
+function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+  }
+  return result;
+}
+
+const DBModal = ({ handleClose,refetch }) => {
   const [databaseType, setDatabaseType] = useState("Blazegraph");
   const [namespace, setNamespace] = useState(""); // New state variable for namespace
   const [port, setPort] = useState("9999");
@@ -22,7 +32,7 @@ const DBModal = ({ handleClose }) => {
     }
 
     const data = {
-      namespace,
+      namespace:generateRandomString(6),
       properties: {
         "com.bigdata.rdf.store.DataLoader":
           "com.bigdata.rdf.data.RDFDataLoader",
@@ -41,7 +51,7 @@ const DBModal = ({ handleClose }) => {
     };
 
     try {
-      await HTTP.post("/create_database/", data, {
+      await HTTP.post("/namespace/", data, {
         headers: {
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
@@ -49,6 +59,7 @@ const DBModal = ({ handleClose }) => {
         },
       });
       toast.success("Database created successfully.");
+      refetch()
       handleClose();
     } catch (error) {
       console.error("There was an error creating the database!", error);

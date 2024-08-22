@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { HTTP } from "../../utils"; // Make sure this is configured to point to your backend
 
-const RepositoryModal = ({ handleCloseRepository }) => {
+const RepositoryModal = ({ handleCloseRepository,name_space }) => {
   const [databaseType, setDatabaseType] = useState("Blazegraph");
   const [ipAddress, setIpAddress] = useState(""); // IP address state
   const [port, setPort] = useState("");
@@ -16,11 +16,10 @@ const RepositoryModal = ({ handleCloseRepository }) => {
     }
 
     const data = {
-      databaseType,
-      ipAddress,
+      database_name:name_space ||databaseType,
+      ip_address:ipAddress,
       port,
     };
-
     try {
       const response = await HTTP.post("/connect_database/", data, {
         headers: {

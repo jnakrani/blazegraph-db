@@ -3,7 +3,7 @@
 ### Prerequisites
 
 - Docker and Docker Compose
-- Node.js and Yarn
+- Node.js 20.x and NPM
 - Python 3.x
 
 ### Installation
