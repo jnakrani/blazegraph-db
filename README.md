@@ -14,9 +14,10 @@
    cd repo_name
    ```
 2. **Set up the backend:**
-
+   set the environment correctly
    ```bash
    cd backend
+   cp .env.example .env
    sudo apt-get update && sudo apt-get install python3-dev default-libmysqlclient-dev
    pip install -r requirements.txt
    python manage.py migrate

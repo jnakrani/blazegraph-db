@@ -1,0 +1,14 @@
+
+FROM openjdk:8-jre-alpine
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Download Blazegraph
+RUN wget https://github.com/blazegraph/database/releases/download/BLAZEGRAPH_RELEASE_2_1_5/blazegraph.jar
+
+# Expose the port on which Blazegraph will run
+EXPOSE 9999
+
+# Command to run Blazegraph
+CMD ["java", "-server", "-Xmx4g", "-jar", "blazegraph.jar"]
